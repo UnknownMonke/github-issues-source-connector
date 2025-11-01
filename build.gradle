@@ -1,0 +1,67 @@
+plugins {
+    id 'java'
+    // Fat JAR generation plugin, see https://gradleup.com/shadow/.
+    id("com.gradleup.shadow") version "9.2.2"
+}
+
+// Sets Java version.
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+// Update Gradle wrapper version : ./gradlew wrapper.
+tasks.named('wrapper') {
+    gradleVersion = '9.2'
+}
+
+group = 'org.monke.connector'
+version = '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+// ------- Versions ------- //
+
+def kafkaVersion = '4.1.0'
+def okHttpVersion = '5.1.0'
+def jacksonVersion = '2.20.0'
+def slf4jVersion = '2.0.17'
+def junitVersion = '5.13.4'
+def lombokVersion = '1.18.40'
+def mockitoVersion = '5.19.0'
+def assertjVersion = '3.27.4'
+
+// ------------------------ //
+
+dependencies {
+    implementation "org.apache.kafka:connect-api:${kafkaVersion}"
+
+    implementation "com.squareup.okhttp3:okhttp:${okHttpVersion}"
+
+    implementation "org.json:json:20250517"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
+
+    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    testImplementation "org.assertj:assertj-core:${assertjVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}
