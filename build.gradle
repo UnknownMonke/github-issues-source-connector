@@ -23,6 +23,12 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    mockitoAgent {
+        transitive = false
+    }
+}
+
 // ------- Versions ------- //
 
 def kafkaVersion = '4.1.0'
@@ -66,8 +72,10 @@ dependencies {
     testImplementation "org.assertj:assertj-core:$assertjVersion"
 
     testImplementation "org.mockito:mockito-junit-jupiter:$mockitoVersion"
+    mockitoAgent "org.mockito:mockito-core:$mockitoVersion"
 }
 
 test {
     useJUnitPlatform()
+    jvmArgs "-javaagent:${configurations.mockitoAgent.asPath}"
 }
