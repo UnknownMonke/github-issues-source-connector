@@ -1,0 +1,20 @@
+curl --location --request POST 'http://localhost:8083/connectors' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+        "name": "github_issues_source_connector",
+        "config": {
+            "connector.class":"org.monke.connector.GithubIssuesSourceConnector",
+            "key.converter.schemas.enable":"true",
+            "tasks.max":"1",
+            "value.converter.schemas.enable":"true",
+            "topic":"github-issues",
+            "value.converter":"org.apache.kafka.connect.json.JsonConverter",
+            "key.converter":"org.apache.kafka.connect.json.JsonConverter",
+            "github.owner":"kubernetes",
+            "github.repo":"kubernetes",
+            "since.timestamp":"2020-01-01T00:00:00Z",
+            "batch.size":100
+        }
+    }'
+
+curl --location --request POST 'http://localhost:8083/connectors/github_issues_source_connector/stop'

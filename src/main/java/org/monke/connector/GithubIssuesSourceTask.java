@@ -1,5 +1,6 @@
 package org.monke.connector;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +17,7 @@ import org.monke.connector.util.DateUtils;
 import org.monke.connector.util.VersionUtils;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>Kafka Connect Source Task that polls GitHub Issues API for new or updated issues in a specified repository.</p>
@@ -30,7 +28,7 @@ import java.util.Map;
 public class GithubIssuesSourceTask extends SourceTask {
 
     protected Instant nextQuerySince;
-    protected Integer lastIssueNumber;
+    protected Integer lastIssueNumber = 1;
     protected Integer nextPageToVisit = 1;
     protected Instant lastUpdatedAt;
 
@@ -87,10 +85,11 @@ public class GithubIssuesSourceTask extends SourceTask {
 
         JSONArray issues = client.fetchIssues(nextPageToVisit, nextQuerySince);
 
-        log.info("Fetched {} record(s).", issues.length());
+        log.debug("Fetched {} record(s).", issues.length());
 
         for (Object obj : issues) {
-            Issue issue = objectMapper.convertValue(obj, Issue.class);
+            Issue issue = parseIssue(obj);
+
             records.add(generateRecord(issue));
             lastUpdatedAt = issue.getUpdatedAt();
         }
@@ -201,5 +200,15 @@ public class GithubIssuesSourceTask extends SourceTask {
             valueStruct.put(Schemas.PR, prStruct);
         }
         return valueStruct;
+    }
+
+    private Issue parseIssue(Object obj) {
+        try {
+            return objectMapper.readValue(obj.toString(), Issue.class);
+
+        } catch (JsonProcessingException e) {
+            log.error("Error parsing issue : {}", obj, e);
+            throw new RuntimeException(e);
+        }
     }
 }

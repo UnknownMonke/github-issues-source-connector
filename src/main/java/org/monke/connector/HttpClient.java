@@ -48,14 +48,12 @@ public class HttpClient {
             xRateRemaining = Integer.parseInt(Objects.requireNonNull(header.get("X-RateLimit-Remaining")));
             xRateReset = Long.parseLong(Objects.requireNonNull(header.get("X-RateLimit-Reset")));
 
-            log.debug("Received response {}", response.code());
-
             switch (response.code()) {
                 case 200 -> {
                     return new JSONArray(Objects.requireNonNull(response.body()).string());
                 }
                 case 401 ->
-                    throw new RuntimeException("Authentication failed: " + response.message());
+                    throw new RuntimeException("Authentication failed: " + response.body().string());
                 case 403 -> {
                     log.warn("Rate limit reached: {}/{}. Reset at {}.", xRateRemaining, xRateLimit,
                         LocalDateTime.ofInstant(Instant.ofEpochSecond(xRateReset), ZoneOffset.systemDefault()));
@@ -63,7 +61,7 @@ public class HttpClient {
                     return fetchIssues(page, since);
                 }
                 default ->
-                    throw new RuntimeException("Unexpected response code: " + response.code() + " with message: " + response.message());
+                    throw new RuntimeException("Unexpected response code: " + response.code() + " with message: " + response.body().string());
             }
 
         } catch (IOException e) {
@@ -102,7 +100,7 @@ public class HttpClient {
     public void sleep() throws InterruptedException {
         long sleepTime = (long) Math.ceil((double) (xRateReset - Instant.now().getEpochSecond()) / xRateRemaining);
 
-        log.debug("Rate limit reached. Sleeping for {} seconds.", sleepTime);
+        log.info("Rate limit reached. Sleeping for {} seconds.", sleepTime);
 
         Thread.sleep(1000 * sleepTime);
     }

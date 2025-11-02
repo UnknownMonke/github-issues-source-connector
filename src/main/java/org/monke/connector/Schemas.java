@@ -4,7 +4,7 @@ import org.apache.kafka.connect.data.Schema;
 import org.apache.kafka.connect.data.SchemaBuilder;
 import org.apache.kafka.connect.data.Timestamp;
 
-public class Schemas {
+public final class Schemas {
 
     public static final String NEXT_PAGE = "next_page";
 
