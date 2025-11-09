@@ -31,17 +31,6 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
-  schema-registry:
-    image: confluentinc/cp-schema-registry:latest
-    container_name: schema-registry
-    ports:
-      - "8081:8081"
-    depends_on:
-      - kafka-cluster
-    environment:
-      SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka-cluster:29092
-
   kafka-connect:
     image: confluentinc/cp-kafka-connect:latest
 #   Use the following to automatically build uber JAR from Dockerfile.
@@ -53,7 +42,6 @@ services:
       - "8083:8083"
     depends_on:
       - kafka-cluster
-      - schema-registry
     environment:
       CONNECT_BOOTSTRAP_SERVERS: kafka-cluster:29092
       CONNECT_GROUP_ID: kafka-connect

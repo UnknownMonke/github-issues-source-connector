@@ -35,6 +35,7 @@ def kafkaVersion = '4.1.0'
 def okHttpVersion = '5.1.0'
 def jacksonVersion = '2.20.0'
 def slf4jVersion = '2.0.17'
+def log4j2Version = '2.25.2'
 def lombokVersion = '1.18.40'
 def junitVersion = '5.13.4'
 def assertjVersion = '3.27.4'
@@ -56,6 +57,7 @@ dependencies {
 
     // --------- Slf4j --------- //
     implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    implementation "org.apache.logging.log4j:log4j-slf4j2-impl:$log4j2Version"
 
     // -------- Lombok --------- //
     compileOnly "org.projectlombok:lombok:$lombokVersion"
