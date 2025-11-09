@@ -28,9 +28,9 @@ import java.util.*;
 public class GithubIssuesSourceTask extends SourceTask {
 
     protected Instant nextQuerySince;
+    protected Instant lastUpdatedAt;
     protected Integer lastIssueNumber = 1;
     protected Integer nextPageToVisit = 1;
-    protected Instant lastUpdatedAt;
 
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
@@ -62,7 +62,7 @@ public class GithubIssuesSourceTask extends SourceTask {
             nextPageToVisit = Integer.parseInt((String) offset.get(Schemas.NEXT_PAGE));
             nextQuerySince = lastUpdatedAt;
 
-            log.info("Resuming from offset. lastUpdatedAt: {}, lastIssueNumber: {}, nextPageToVisit: {}",
+            log.info("Resuming from offset. lastUpdatedAt : {}, lastIssueNumber : {}, nextPageToVisit : {}",
                 lastUpdatedAt, lastIssueNumber, nextPageToVisit);
 
         } else {
@@ -97,7 +97,7 @@ public class GithubIssuesSourceTask extends SourceTask {
         if (issues.length() == 100) { // Full batch, increments page.
             nextPageToVisit++;
 
-        } else {
+        } else { // No more issues to fetch, will fetch from last updated at in a new page.
             nextQuerySince = lastUpdatedAt.plusSeconds(1);
             nextPageToVisit = 1;
             client.sleep();
