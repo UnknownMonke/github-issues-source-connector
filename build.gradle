@@ -40,6 +40,8 @@ def lombokVersion = '1.18.40'
 def junitVersion = '5.13.4'
 def assertjVersion = '3.27.4'
 def mockitoVersion = '5.19.0'
+def testcontainersVersion = '2.0.1'
+def awaitilityVersion = '4.3.0'
 
 // ------------------------ //
 
@@ -75,6 +77,15 @@ dependencies {
 
     testImplementation "org.mockito:mockito-junit-jupiter:$mockitoVersion"
     mockitoAgent "org.mockito:mockito-core:$mockitoVersion"
+
+    // --- Integration tests --- //
+    testImplementation "org.testcontainers:testcontainers-kafka:$testcontainersVersion"
+    testImplementation "org.testcontainers:testcontainers-junit-jupiter:$testcontainersVersion"
+
+    testImplementation "org.apache.kafka:kafka-clients:$kafkaVersion"
+    testImplementation "org.apache.kafka:connect-runtime:$kafkaVersion"
+
+    testImplementation "org.awaitility:awaitility:$awaitilityVersion"
 }
 
 test {

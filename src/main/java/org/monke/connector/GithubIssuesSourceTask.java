@@ -94,7 +94,7 @@ public class GithubIssuesSourceTask extends SourceTask {
             lastUpdatedAt = issue.getUpdatedAt();
         }
 
-        if (issues.length() == 100) { // Full batch, increments page.
+        if (issues.length() == config.getBatchSize()) { // Full batch, increments page.
             nextPageToVisit++;
 
         } else { // No more issues to fetch, will fetch from last updated at in a new page.
