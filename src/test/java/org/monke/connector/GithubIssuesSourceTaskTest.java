@@ -35,14 +35,14 @@ public class GithubIssuesSourceTaskTest {
 
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         when(connectorConfig.getRepo()).thenReturn("kubernetes");
         when(connectorConfig.getOwner()).thenReturn("kubernetes");
         when(connectorConfig.getTopic()).thenReturn("github-issues");
     }
 
     @Test
-    public void poll_should_successfully_parse_issues() throws InterruptedException {
+    void poll_should_successfully_parse_issues() throws InterruptedException {
         InputStream inputStream = getClass().getResourceAsStream("/issue.json");
         assertThat(inputStream).isNotNull();
 

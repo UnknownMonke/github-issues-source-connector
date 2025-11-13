@@ -19,7 +19,7 @@ public class ModelDeserializationTest {
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     @Test
-    public void should_serialize_to_entity_class() throws IOException {
+    void should_serialize_to_entity_class() throws IOException {
         InputStream inputStream = getClass().getResourceAsStream("/issue.json");
         assertThat(inputStream).isNotNull();
 

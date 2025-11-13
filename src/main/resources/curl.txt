@@ -17,4 +17,9 @@ curl --location --request POST 'http://localhost:8083/connectors' \
         }
     }'
 
-curl --location --request POST 'http://localhost:8083/connectors/github_issues_source_connector/stop'
+curl --location --request GET    'http://localhost:8083/connectors/github_issues_source_connector/status'
+curl --location --request PUT    'http://localhost:8083/connectors/github_issues_source_connector/pause'
+curl --location --request PUT    'http://localhost:8083/connectors/github_issues_source_connector/resume'
+curl --location --request PUT    'http://localhost:8083/connectors/github_issues_source_connector/stop'
+curl --location --request POST   'http://localhost:8083/connectors/github_issues_source_connector/restart'
+curl --location --request DELETE 'http://localhost:8083/connectors/github_issues_source_connector'
