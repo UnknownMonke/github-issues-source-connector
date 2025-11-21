@@ -23,16 +23,19 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 /**
- * <p>Abstract integration base class for Kafka Connect connector tests.</p>
- * <p>Wraps each tests with setup and teardown for :</p>
+ * Abstract integration base class for Kafka Connect connector tests.
+ * 
+ * <p> Wraps each tests with setup and teardown for :
  * <ul>
- *     <li>Test cluster running in a {@link Testcontainers} with supplied configuration through {@link TestClusterConfig}.</li>
- *     <li>Producer, consumer, and admin client for test interactions with supplied configuration
- *          through {@link TestProducerProperties}, {@link TestConsumerProperties}.</li>
- *     <li>Connect runtime worker with supplied configuration through {@link TestWorkerConfig}</li>
+ *     <li> Test cluster running in a {@link Testcontainers} with supplied configuration through {@link TestClusterConfig}.
+ *     <li> Producer, consumer, and admin client for test interactions with supplied configuration
+ *          through {@link TestProducerProperties}, {@link TestConsumerProperties}.
+ *     <li> Connect runtime worker with supplied configuration through {@link TestWorkerConfig}
  * </ul>
- * <p>Provides utility methods for creating topics and connector configurations.</p>
- * <p>Fully generic and usable for any custom Connect plugins (connectors, SMTs...).</p>
+ *
+ * <p> Provides utility methods for creating topics and connector configurations.
+ *
+ * <p> Fully generic and usable for any custom Connect plugins (connectors, SMTs...).
  */
 @Slf4j
 @Testcontainers

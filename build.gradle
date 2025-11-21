@@ -12,6 +12,7 @@ java {
 }
 
 group = 'org.monke.connector'
+description = 'Custom Kafka connector'
 version = '1.0.0-SNAPSHOT'
 
 // Update Gradle wrapper version : ./gradlew wrapper.

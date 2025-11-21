@@ -20,9 +20,11 @@ import java.time.Instant;
 import java.util.*;
 
 /**
- * <p>Kafka Connect Source Task that polls GitHub Issues API for new or updated issues in a specified repository.</p>
- * <p>Maps issues to Kafka records with defined key and value schemas (see {@link Schemas}).</p>
- * <p>Maintains state using source partitions and offsets to ensure exactly-once delivery.</p>
+ * Kafka Connect Source Task that polls GitHub Issues API for new or updated issues in a specified repository.
+ * 
+ * <p> Maps issues to Kafka records with defined key and value schemas (see {@link Schemas}).
+ * 
+ * <p> Maintains state using source partitions and offsets to ensure exactly-once delivery.
  */
 @Slf4j
 public class GithubIssuesSourceTask extends SourceTask {
@@ -74,8 +76,10 @@ public class GithubIssuesSourceTask extends SourceTask {
     }
 
     /**
-     * <p>Main method. Polls for new issues and maps to a Kafka record with additional information, such as source specific partitions and offsets.</p>
-     * <p>Only a subset of the entity is pushed to Kafka, as defined by the associated schemas (see {@link Schemas}).</p>
+     * Main method. Polls for new issues and maps to a Kafka record with additional information,
+     * such as source specific partitions and offsets.
+     * 
+     * <p> Only a subset of the entity is pushed to Kafka, as defined by the associated schemas (see {@link Schemas}).
      */
     @Override
     public List<SourceRecord> poll() throws InterruptedException {
@@ -148,9 +152,11 @@ public class GithubIssuesSourceTask extends SourceTask {
     }
 
     /**
-     * <p>Builds Kafka record key from source entity.</p>
-     * <p>An issue is uniquely identified by its owner + repo and issue number.</p>
-     * <p>Key is validated using the defined key schema.</p>
+     * Builds Kafka record key from source entity.
+     * 
+     * <p> An issue is uniquely identified by its owner + repo and issue number.
+     * 
+     * <p> Key is validated using the defined key schema.
      */
     private Struct mapRecordKey(Issue issue) {
 
@@ -161,12 +167,16 @@ public class GithubIssuesSourceTask extends SourceTask {
     }
 
     /**
-     * <p>Builds Kafka record value from source entity.</p>
-     * <p>Only a subset of the issue entity is pushed to Kafka, as defined by the associated value schema (see {@link Schemas}).</p>
-     * <p>Value is validated using the defined value schema.</p>
-     * <p>Nested structs are used for user and pull request information.</p>
-     * <p>Pull request is optional, as not all issues are pull requests.
-     * User is mandatory, as all issues have a user.</p>
+     * Builds Kafka record value from source entity.
+     *
+     * <p> Only a subset of the issue entity is pushed to Kafka, as defined by the associated value schema (see {@link Schemas}).
+     *
+     * <p> Value is validated using the defined value schema.
+     *
+     * <p> Nested structs are used for user and pull request information.
+     *
+     * <p> Pull request is optional, as not all issues are pull requests.
+     * User is mandatory, as all issues have a user.
      */
     public Struct mapRecordValue(Issue issue) {
 

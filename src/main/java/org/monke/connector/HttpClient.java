@@ -13,12 +13,16 @@ import java.time.ZoneOffset;
 import java.util.Objects;
 
 /**
- * <p>HTTP client for making requests to the GitHub API. Handles rate limiting and request building.</p>
- * <p>Only handles JSON. Deserialization is API version dependent and is handled within the task.</p>
- * <p>The client follows SRP by only handling requests with rate limitations.</p>
- * <p>Rate limitation state is tracked here for <b>encapsulation</b> since sleep methods requiring it are accessed from the task.</p>
- * <p>For pages greater than 1 for a given timestamp, next issues are fetched through HATEOAS by parsing the returned rels for next URL,
- * as per GitHub API requirements.</p>
+ * HTTP client for making requests to the GitHub API. Handles rate limiting and request building.
+ *
+ * <p> Only handles JSON. Deserialization is API version dependent and is handled within the task.
+ *
+ * <p> The client follows SRP by only handling requests with rate limitations.
+ *
+ * <p> Rate limitation state is tracked here for <b>encapsulation</b> since sleep methods requiring it are accessed from the task.
+ *
+ * <p> For pages greater than 1 for a given timestamp, next issues are fetched through HATEOAS by parsing the returned rels for next URL,
+ * as per GitHub API requirements.
  */
 @Slf4j
 public class HttpClient {
@@ -41,8 +45,8 @@ public class HttpClient {
     }
 
     /**
-     * <p>Gets issues after the given timestamp with pagination.</p>
-     * <p>Discovers next page URL through HATEOAS if not the first page for given timestamp.</p>
+     * Gets issues after the given timestamp with pagination.
+     * Discovers next page URL through HATEOAS if not the first page for given timestamp.
      */
     protected JSONArray fetchIssues(Integer page, Instant since) throws InterruptedException {
         String url = page == 1 ? buildUrl(since) : nextPage;
@@ -93,8 +97,9 @@ public class HttpClient {
     }
 
     /**
-     * <p>Simple URL builder without using {@link HttpUrl} methods to keep it straightforward.</p>
-     * <p>Builds URL for first page. Next pages for the same timestamp are fetched through HATEOAS.</p>
+     * Simple URL builder without using {@link HttpUrl} methods to keep it straightforward.
+     *
+     * <p> Builds URL for first page. Next pages for the same timestamp are fetched through HATEOAS.
      */
     private String buildUrl(Instant since) {
         return String.format(

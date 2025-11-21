@@ -1,9 +1,9 @@
 package org.monke.connector.util;
 
 /**
- * <p>Utility class to get the version of the application from Gradle / Maven.</p>
- * <p>Only works when running from JAR.</p>
- * <p>When running from IDE, it will return "0.0.0".</p>
+ * Utility class to get the version of the application from Gradle / Maven.
+ *
+ * <p> Only works when running from JAR. When running from IDE, it will return "0.0.0".
  */
 public class VersionUtils {
 

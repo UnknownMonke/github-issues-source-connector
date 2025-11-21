@@ -30,16 +30,17 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
 
 /**
- * <p>Connect runtime implementation.</p>
- * <p>Methods :
+ * Connect runtime implementation.
+ *
+ * <p> Methods :
  * <ul>
- *     <li>{@link #start(Map)} : Initializes and starts the Connect runtime components including Worker, Herder, and REST server.</li>
- *     <li>{@link #stop()} : Stops the Connect runtime components gracefully.</li>
- *     <li>{@link #createConnector(Map)} : Creates a new connector with the given configuration.</li>
- *     <li>{@link #restartTask(String, int)} : Restarts a specific task of a connector.</li>
+ *     <li> {@link #start(Map)} : Initializes and starts the Connect runtime components including Worker, Herder, and REST server.
+ *     <li> {@link #stop()} : Stops the Connect runtime components gracefully.
+ *     <li> {@link #createConnector(Map)} : Creates a new connector with the given configuration.
+ *     <li> {@link #restartTask(String, int)} : Restarts a specific task of a connector.
  * </ul>
- * </p>
- * <p>An {@link OffsetBackingStore} creates the connector offset management mechanism through the offset topic.</p>
+ * 
+ * <p> An {@link OffsetBackingStore} creates the connector offset management mechanism through the offset topic.
  */
 @Slf4j
 @NoArgsConstructor
@@ -53,9 +54,11 @@ public final class ConnectRunner {
     private Connect<StandaloneHerder> connect;  // Main Connect runtime.
 
     /**
-     * <p>Creates a new connector with the given configuration.</p>
-     * <p>Uses Herder to submit the connector configuration to runtime and waits for the operation to complete.</p>
-     * <p>Connect runtime must be started before invoking this method.</p>
+     * Creates a new connector with the given configuration.
+     *
+     * <p> Uses Herder to submit the connector configuration to runtime and waits for the operation to complete.
+     *
+     * <p> Connect runtime must be started before invoking this method.
      */
     public void createConnector(Map<String, String> config) throws ExecutionException, InterruptedException {
         final String connectorName = config.get(ConnectorConfig.NAME_CONFIG);
@@ -89,9 +92,11 @@ public final class ConnectRunner {
     }
 
     /**
-     * <p>Restarts a specific task of a connector.</p>
-     * <p>Uses Herder to restart the specified task and waits for the operation to complete.</p>
-     * <p>Connect runtime must be started before invoking this method.</p>
+     * Restarts a specific task of a connector.
+     *
+     * <p> Uses Herder to restart the specified task and waits for the operation to complete.
+     *
+     * <p> Connect runtime must be started before invoking this method.
      */
     public void restartTask(final String connector, final int task) {
         if (!started) {

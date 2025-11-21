@@ -12,11 +12,11 @@ import java.util.Map;
 /**
  * Connector configuration definition :
  * <ul>
- *     <li>Accesses needed common and specific properties.</li>
- *     <li>Defines allowed properties to be validated when receiving standalone or distributed configuration.</li>
+ *     <li> Accesses needed common and specific properties.
+ *     <li> Defines allowed properties to be validated when receiving standalone or distributed configuration.
  * </ul>
  */
-public final class ConnectorConfig extends AbstractConfig {
+public class ConnectorConfig extends AbstractConfig {
 
     public static final String NAME_CONFIG = "name";
     public static final String TASKS_MAX_CONFIG = "tasks.max";
