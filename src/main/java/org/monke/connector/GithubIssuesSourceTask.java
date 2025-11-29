@@ -14,7 +14,7 @@ import org.monke.connector.model.Issue;
 import org.monke.connector.model.PullRequest;
 import org.monke.connector.model.User;
 import org.monke.connector.util.DateUtils;
-import org.monke.connector.util.VersionUtils;
+import org.monke.connector.util.Version;
 
 import java.time.Instant;
 import java.util.*;
@@ -42,7 +42,7 @@ public class GithubIssuesSourceTask extends SourceTask {
 
     @Override
     public String version() {
-        return VersionUtils.getVersion();
+        return Version.getVersion();
     }
 
     @Override

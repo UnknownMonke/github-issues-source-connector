@@ -4,16 +4,16 @@ plugins {
     id("com.gradleup.shadow") version "9.2.2"
 }
 
+group = 'org.monke.connector'
+description = 'Custom Kafka connector'
+version = '1.0.0'
+
 // Sets Java version.
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
-
-group = 'org.monke.connector'
-description = 'Custom Kafka connector'
-version = '1.0.0-SNAPSHOT'
 
 // Update Gradle wrapper version : ./gradlew wrapper.
 wrapper {
@@ -27,6 +27,14 @@ repositories {
 configurations {
     mockitoAgent {
         transitive = false
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+                'Implementation-Version': version
+        )
     }
 }
 

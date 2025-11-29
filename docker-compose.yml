@@ -60,6 +60,8 @@ services:
       CONNECT_REST_ADVERTISED_HOST_NAME: "kafka-connect"
       CONNECT_REST_PORT: 8083
 
+      # CONNECT_LOG4J_LOGGERS: org.apache.kafka.connect=DEBUG
+
       CONNECT_PLUGIN_PATH: /opt/kafka/plugins
     volumes:
       - ${PWD}/build/libs:/opt/kafka/plugins

@@ -5,7 +5,7 @@ import org.apache.kafka.connect.connector.Task;
 import org.apache.kafka.connect.source.ExactlyOnceSupport;
 import org.apache.kafka.connect.source.SourceConnector;
 import org.monke.connector.config.ConnectorConfig;
-import org.monke.connector.util.VersionUtils;
+import org.monke.connector.util.Version;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class GithubIssuesSourceConnector extends SourceConnector {
 
     @Override
     public String version() {
-        return VersionUtils.getVersion();
+        return Version.getVersion();
     }
 
     /**
