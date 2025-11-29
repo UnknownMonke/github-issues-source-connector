@@ -13,7 +13,12 @@ curl --location --request POST 'http://localhost:8083/connectors' \
             "github.owner": "kubernetes",
             "github.repo": "kubernetes",
             "since.timestamp": "2020-01-01T00:00:00Z",
-            "batch.size":100
+            "batch.size": 100,
+            "error.log.enable": "true",
+            "error.log.include.messages": "true",
+            "transforms": "ValueToKey",
+            "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+            "transforms.ValueToKey.fields": "number"
         }
     }'
 
