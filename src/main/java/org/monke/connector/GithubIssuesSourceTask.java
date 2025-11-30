@@ -31,8 +31,8 @@ public class GithubIssuesSourceTask extends SourceTask {
 
     protected Instant nextQuerySince;
     protected Instant lastUpdatedAt;
-    protected Integer lastIssueNumber = 1;
-    protected Integer nextPageToVisit = 1;
+    protected Integer lastIssueNumber;
+    protected Integer nextPageToVisit;
 
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 

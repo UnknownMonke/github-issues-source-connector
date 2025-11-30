@@ -53,7 +53,7 @@ public class HttpClient {
         Request request = buildRequest(url);
 
         try (Response response = client.newCall(request).execute()) {
-            log.debug("GET {}", request.url());
+            log.info("GET {}", request.url());
 
             // Updates rate limit state.
             Headers headers = response.headers();

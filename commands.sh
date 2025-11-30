@@ -1,3 +1,5 @@
+# ------- REST API ------- #
+
 curl --location --request POST 'http://localhost:8083/connectors' \
     --header 'Content-Type: application/json' \
     --data-raw '{
@@ -28,3 +30,15 @@ curl --location --request PUT    'http://localhost:8083/connectors/github_issues
 curl --location --request PUT    'http://localhost:8083/connectors/github_issues_source_connector/stop'
 curl --location --request POST   'http://localhost:8083/connectors/github_issues_source_connector/restart'
 curl --location --request DELETE 'http://localhost:8083/connectors/github_issues_source_connector'
+
+# ------- Other ------- #
+
+docker exec -it -w /opt/kafka/bin kafka-cluster bash
+docker exec -it -u root kafka-connect bash
+
+/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-cluster:29092 \
+    --topic github-issues --create --partitions 3 --replication-factor 1
+
+/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka-cluster:29092 --list
+
+/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka-cluster:29092 --from-beginning --topic github-issues

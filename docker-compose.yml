@@ -5,6 +5,7 @@ services:
     container_name: kafka-cluster
     ports:
       - "9092:9092"
+      - "9101:9101"
     environment:
       # ------ Required KRaft properties ------ #
 
@@ -21,6 +22,11 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT, EXTERNAL:PLAINTEXT, CONTROLLER:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+
+      # --------------- Metrics --------------- #
+
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
 
       # --------- Other configuration --------- #
 
@@ -57,7 +63,7 @@ services:
       CONNECT_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
 
-      CONNECT_REST_ADVERTISED_HOST_NAME: "kafka-connect"
+      CONNECT_REST_ADVERTISED_HOST_NAME: kafka-connect
       CONNECT_REST_PORT: 8083
 
       # CONNECT_LOG4J_LOGGERS: org.apache.kafka.connect=DEBUG
