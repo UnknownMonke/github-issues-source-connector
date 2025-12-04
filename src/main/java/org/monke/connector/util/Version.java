@@ -1,5 +1,7 @@
 package org.monke.connector.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Utility class to get application version from Gradle / Maven.
  *
@@ -9,6 +11,7 @@ package org.monke.connector.util;
  * <p> Note : A slightly more complicated method consists of defining a {@code version.properties} or {@code version.txt} file
  * in resources path, either statically or dynamically during the build process and reading it at runtime.
  */
+@Slf4j
 public class Version {
 
     public static String getVersion() {
@@ -16,6 +19,7 @@ public class Version {
             return Version.class.getPackage().getImplementationVersion();
 
         } catch (Exception ex) {
+            log.warn("Could not fetch a valid version, defaulting to unknown.");
             return "unknown";
         }
     }

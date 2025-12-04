@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import org.apache.kafka.connect.data.Struct;
+import org.apache.kafka.connect.errors.ConnectException;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.apache.kafka.connect.source.SourceTask;
 import org.json.JSONArray;
@@ -17,7 +18,10 @@ import org.monke.connector.util.DateUtils;
 import org.monke.connector.util.Version;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Kafka Connect Source Task that polls GitHub Issues API for new or updated issues in a specified repository.
@@ -217,8 +221,7 @@ public class GithubIssuesSourceTask extends SourceTask {
             return objectMapper.readValue(obj.toString(), Issue.class);
 
         } catch (JsonProcessingException e) {
-            log.error("Error parsing issue : {}", obj, e);
-            throw new RuntimeException(e);
+            throw new ConnectException(String.format("Error parsing issue : %s", obj), e);
         }
     }
 }

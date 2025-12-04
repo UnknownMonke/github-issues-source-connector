@@ -2,6 +2,7 @@ package org.monke.connector;
 
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
+import org.apache.kafka.connect.errors.ConnectException;
 import org.json.JSONArray;
 import org.monke.connector.config.ConnectorConfig;
 import org.monke.connector.util.RelsUtils;
@@ -69,7 +70,8 @@ public class HttpClient {
                     return new JSONArray(Objects.requireNonNull(response.body()).string());
                 }
                 case 401 ->
-                    throw new RuntimeException("Authentication failed : " + response.body().string());
+                    throw new ConnectException("Authentication failed : " + response.body().string());
+
                 case 403 -> {
                     log.warn("Rate limit reached : {}/{}. Reset at {}.", xRateRemaining, xRateLimit,
                         LocalDateTime.ofInstant(Instant.ofEpochSecond(xRateReset), ZoneOffset.systemDefault()));
@@ -77,11 +79,11 @@ public class HttpClient {
                     return fetchIssues(page, since);
                 }
                 default ->
-                    throw new RuntimeException("Unexpected response code : " + response.code() + " with message : " + response.body().string());
+                    throw new ConnectException("Unexpected response code : " + response.code() + " with message : " + response.body().string());
             }
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ConnectException("Error fetching response", e);
         }
     }
 

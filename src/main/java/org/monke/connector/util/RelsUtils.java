@@ -1,5 +1,7 @@
 package org.monke.connector.util;
 
+import org.apache.kafka.connect.errors.ConnectException;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,7 +32,7 @@ public class RelsUtils {
                 );
 
         } catch (Exception e) {
-            throw new RuntimeException("Unexpected rels format : " + rels, e);
+            throw new ConnectException("Unexpected rels format : " + rels, e);
         }
     }
 }
